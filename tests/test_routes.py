@@ -2,7 +2,6 @@
 from unittest.mock import patch, MagicMock
 from uuid import uuid4
 from src.models.enums import UserRole
-from src.plugins.base import PluginStatus
 from src.plugins.config_store import PluginConfigEntry
 
 
