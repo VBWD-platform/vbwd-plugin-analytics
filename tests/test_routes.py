@@ -1,8 +1,8 @@
 """Tests for analytics plugin routes."""
 from unittest.mock import patch, MagicMock
 from uuid import uuid4
-from src.models.enums import UserRole
-from src.plugins.config_store import PluginConfigEntry
+from vbwd.models.enums import UserRole
+from vbwd.plugins.config_store import PluginConfigEntry
 
 
 def _mock_admin_auth(mock_auth_user_repo_class, mock_auth_class):
@@ -25,8 +25,8 @@ def _mock_admin_auth(mock_auth_user_repo_class, mock_auth_class):
 class TestActiveSessions:
     """Tests for GET /api/v1/plugins/analytics/active-sessions."""
 
-    @patch("src.middleware.auth.AuthService")
-    @patch("src.middleware.auth.UserRepository")
+    @patch("vbwd.middleware.auth.AuthService")
+    @patch("vbwd.middleware.auth.UserRepository")
     def test_returns_active_sessions_when_enabled(
         self, mock_repo_class, mock_auth_class, app, client
     ):
@@ -50,8 +50,8 @@ class TestActiveSessions:
         assert "source" in data
         assert data["source"] == "plugin"
 
-    @patch("src.middleware.auth.AuthService")
-    @patch("src.middleware.auth.UserRepository")
+    @patch("vbwd.middleware.auth.AuthService")
+    @patch("vbwd.middleware.auth.UserRepository")
     def test_returns_404_when_disabled(
         self, mock_repo_class, mock_auth_class, app, client
     ):
@@ -70,8 +70,8 @@ class TestActiveSessions:
 
         assert response.status_code == 404
 
-    @patch("src.middleware.auth.AuthService")
-    @patch("src.middleware.auth.UserRepository")
+    @patch("vbwd.middleware.auth.AuthService")
+    @patch("vbwd.middleware.auth.UserRepository")
     def test_requires_admin_role(self, mock_repo_class, mock_auth_class, app, client):
         """Non-admin users should get 403."""
         user_id = uuid4()

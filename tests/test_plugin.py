@@ -1,6 +1,6 @@
 """Tests for analytics plugin lifecycle and functionality."""
-from src.plugins.base import BasePlugin, PluginStatus
-from src.plugins.manager import PluginManager
+from vbwd.plugins.base import BasePlugin, PluginStatus
+from vbwd.plugins.manager import PluginManager
 from plugins.analytics import AnalyticsPlugin
 
 

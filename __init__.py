@@ -1,6 +1,6 @@
 """Analytics plugin — provides active sessions count."""
 from typing import Dict, Any, Optional, Callable, TYPE_CHECKING
-from src.plugins.base import BasePlugin, PluginMetadata
+from vbwd.plugins.base import BasePlugin, PluginMetadata
 
 if TYPE_CHECKING:
     from flask import Blueprint

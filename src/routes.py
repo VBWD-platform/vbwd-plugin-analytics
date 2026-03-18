@@ -1,12 +1,12 @@
 """Analytics plugin API routes."""
 from flask import Blueprint, jsonify, current_app
 from sqlalchemy import func
-from src.middleware.auth import require_auth, require_admin
-from src.extensions import db
-from src.models.user import User
-from src.models.subscription import Subscription
-from src.models.invoice import UserInvoice
-from src.models.enums import SubscriptionStatus, InvoiceStatus
+from vbwd.middleware.auth import require_auth, require_admin
+from vbwd.extensions import db
+from vbwd.models.user import User
+from vbwd.models.subscription import Subscription
+from vbwd.models.invoice import UserInvoice
+from vbwd.models.enums import SubscriptionStatus, InvoiceStatus
 
 # Blueprint for admin analytics (handles core dashboard analytics)
 analytics_admin_bp = Blueprint(

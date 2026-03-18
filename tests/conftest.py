@@ -9,8 +9,8 @@ os.environ["TESTING"] = "true"
 @pytest.fixture
 def app():
     """Create application for testing."""
-    from src.app import create_app
-    from src.config import get_database_url
+    from vbwd.app import create_app
+    from vbwd.config import get_database_url
 
     test_config = {
         "TESTING": True,
@@ -22,7 +22,7 @@ def app():
 
     app = create_app(test_config)
 
-    from src.extensions import limiter
+    from vbwd.extensions import limiter
 
     limiter.reset()
 
