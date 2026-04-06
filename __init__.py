@@ -43,6 +43,13 @@ class AnalyticsPlugin(BasePlugin):
 
         return analytics_admin_bp
 
+    @property
+    def admin_permissions(self):
+        return [
+            {"key": "analytics.view", "label": "View analytics", "group": "Analytics"},
+            {"key": "analytics.configure", "label": "Analytics settings", "group": "Analytics"},
+        ]
+
     def on_enable(self) -> None:
         self._active = True
         self._count_fn = self._config.get("session_count_fn")

@@ -1,7 +1,7 @@
 """Analytics plugin API routes."""
 from flask import Blueprint, jsonify, current_app
 from sqlalchemy import func
-from vbwd.middleware.auth import require_auth, require_admin
+from vbwd.middleware.auth import require_auth, require_admin, require_permission
 from vbwd.extensions import db
 from vbwd.models.user import User
 from vbwd.models.subscription import Subscription
@@ -20,6 +20,7 @@ analytics_plugin_bp = Blueprint("analytics_plugin", __name__)
 @analytics_admin_bp.route("/dashboard", methods=["GET"])
 @require_auth
 @require_admin
+@require_permission("analytics.view")
 def get_dashboard():
     """
     Get dashboard analytics.
@@ -83,6 +84,7 @@ def get_dashboard():
 @analytics_plugin_bp.route("/active-sessions", methods=["GET"])
 @require_auth
 @require_admin
+@require_permission("analytics.view")
 def get_active_sessions():
     """Get active sessions count from analytics plugin."""
     config_store = getattr(current_app, "config_store", None)
