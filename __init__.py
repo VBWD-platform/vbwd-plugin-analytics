@@ -47,7 +47,11 @@ class AnalyticsPlugin(BasePlugin):
     def admin_permissions(self):
         return [
             {"key": "analytics.view", "label": "View analytics", "group": "Analytics"},
-            {"key": "analytics.configure", "label": "Analytics settings", "group": "Analytics"},
+            {
+                "key": "analytics.configure",
+                "label": "Analytics settings",
+                "group": "Analytics",
+            },
         ]
 
     def on_enable(self) -> None:
