@@ -79,6 +79,7 @@ class TestActiveSessions:
         mock_user.id = user_id
         mock_user.status.value = "ACTIVE"
         mock_user.role = UserRole.USER
+        mock_user.is_admin = False
 
         mock_repo = MagicMock()
         mock_repo.find_by_id.return_value = mock_user
