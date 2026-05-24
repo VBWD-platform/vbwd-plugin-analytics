@@ -4,9 +4,9 @@ from sqlalchemy import func
 from vbwd.middleware.auth import require_auth, require_admin, require_permission
 from vbwd.extensions import db
 from vbwd.models.user import User
-from vbwd.models.subscription import Subscription
 from vbwd.models.invoice import UserInvoice
-from vbwd.models.enums import SubscriptionStatus, InvoiceStatus
+from vbwd.models.enums import InvoiceStatus
+from vbwd.services.subscription_read_model import resolve_subscription_read_model
 
 # Blueprint for admin analytics (handles core dashboard analytics)
 analytics_admin_bp = Blueprint(
@@ -37,13 +37,9 @@ def get_dashboard():
     # Count total users
     total_users = db.session.query(func.count(User.id)).scalar() or 0
 
-    # Count active subscriptions
-    active_subscriptions = (
-        db.session.query(func.count(Subscription.id))
-        .filter(Subscription.status == SubscriptionStatus.ACTIVE)
-        .scalar()
-        or 0
-    )
+    # Count active subscriptions via the read-model port (no subscription import;
+    # 0 when the subscription plugin is disabled).
+    active_subscriptions = resolve_subscription_read_model().active_subscription_count()
 
     # Calculate total revenue from paid invoices
     total_revenue = (
