@@ -6,12 +6,28 @@ from vbwd.extensions import db
 from vbwd.models.user import User
 from vbwd.models.invoice import UserInvoice
 from vbwd.models.enums import InvoiceStatus
-from vbwd.services.subscription_read_model import resolve_subscription_read_model
 
 # Blueprint for admin analytics (handles core dashboard analytics)
 analytics_admin_bp = Blueprint(
     "analytics_admin", __name__, url_prefix="/api/v1/admin/analytics"
 )
+
+
+def _count_active_subscriptions() -> int:
+    """Active-subscription metric, read directly from the subscription plugin.
+
+    Subscription is an optional dependency for analytics (analytics works
+    standalone), so the read is a soft, lazy import: 0 when the subscription
+    plugin is absent/disabled — no error, the dashboard just shows 0.
+    """
+    try:
+        from plugins.subscription.subscription.services.subscription_read_model import (  # noqa: E501
+            SubscriptionReadModel,
+        )
+    except ImportError:
+        return 0
+    return SubscriptionReadModel().active_subscription_count()
+
 
 # Blueprint for plugin-specific analytics endpoints
 analytics_plugin_bp = Blueprint("analytics_plugin", __name__)
@@ -37,9 +53,9 @@ def get_dashboard():
     # Count total users
     total_users = db.session.query(func.count(User.id)).scalar() or 0
 
-    # Count active subscriptions via the read-model port (no subscription import;
+    # Count active subscriptions from the subscription plugin (soft-optional;
     # 0 when the subscription plugin is disabled).
-    active_subscriptions = resolve_subscription_read_model().active_subscription_count()
+    active_subscriptions = _count_active_subscriptions()
 
     # Calculate total revenue from paid invoices
     total_revenue = (
