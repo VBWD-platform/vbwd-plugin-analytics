@@ -11,7 +11,7 @@ class TestAnalyticsPluginMetadata:
 
     def test_has_correct_version(self):
         plugin = AnalyticsPlugin()
-        assert plugin.metadata.version == "1.0.0"
+        assert plugin.metadata.version == "26.6"
 
     def test_has_correct_author(self):
         plugin = AnalyticsPlugin()
