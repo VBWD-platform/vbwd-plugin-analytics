@@ -23,7 +23,7 @@ class AnalyticsPlugin(BasePlugin):
     def metadata(self) -> PluginMetadata:
         return PluginMetadata(
             name="analytics",
-            version="26.6",
+            version="26.6.1",
             author="VBWD Team",
             description="Dashboard analytics widget — active sessions count",
             dependencies=[],
